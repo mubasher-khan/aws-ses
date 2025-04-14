@@ -10,7 +10,7 @@ module Kernel
   
   def expirable_memoize(reload = false, storage = nil)
     current_method = RUBY_VERSION > '1.8.7' ? __called_from__ : __method__(1)
-    storage = "@#{storage || current_method}"
+    storage = "@#{(storage || current_method || 'default_storage').to_s.sub(/^@/, '')}"
     if reload 
       instance_variable_set(storage, nil)
     else
